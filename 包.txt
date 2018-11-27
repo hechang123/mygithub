@@ -1,0 +1,6 @@
+import turtle as t
+import 包名 #包名.函数名
+import 包名 as 包别名
+from 包名 import 函数1，函数2...函数n
+from 包名 import * #导入所有函数
+from 包名 
