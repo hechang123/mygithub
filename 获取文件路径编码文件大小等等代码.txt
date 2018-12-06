@@ -1,0 +1,46 @@
+﻿import os
+from chardet import detect
+def get_file_info(file_path):
+	with open(file_path,"rb") as fp:
+		encode = detect(fp.read())['encoding']
+		print("编码:"+str(encode))
+
+	line_count,blank_count = 0,0
+	with open(file_path,'r',encoding=encode) as fp:
+		while True:
+			line = fp.readline()
+			if not line:
+				break
+			line_count+=1
+			if len(line.strip()) == 0:
+				blank_count+=1
+	print(str(line_count)+"行"+str(blank_count)+"空格")
+
+root_path = os.getcwd()   #获取文件路径
+dir_count,file_count = 0,0.
+info = open("file_info.txt",'w')
+for root,dirs,files in os.walk(root_path):
+	if not os.path.isfile(root):
+		dir_count+=1
+	for f in files:
+		file_path = os.path.join(root,f)
+		if os.path.isfile(file_path):
+			file_count+=1
+		print("文件名"+os.path.splitext(f)[0])
+		print("文件类型："+os.path.splitext(f)[1])
+		print("文件大小:"+str(os.path.getsize(file_path))+"Bytes")
+		print("文件路径:"+root)
+		get_file_info(file_path)
+		print("-"*60)
+print(str(dir_count-1)+"文件夹")		
+print(str(file_count)+"文件")
+print("格式如下：")
+
+root_path = os.getcwd()
+offset = len(root_path.split("\\"))
+for root,dirs,files in os.walk(root_path):
+	current_path =  root.split("\\")
+	level = len(current_path) - offset
+	print("\t"*level+"\\"+current_path[-1])
+	for f in files:
+		print("\t"*(level+1)+f)
