@@ -1,0 +1,19 @@
+import smtplib
+from email.mime.text import MIMEText
+from_addr="1451015900@qq.com"   #发件人邮箱
+to_addr="1451015900@qq.com"     #收件人邮箱
+psw='hybabwgncwiebaah'        #授权码
+smtp_server="smtp.qq.com"
+ with open("test.html",'r',encoding='utf-8') as fp:
+ 	contents=fp.read()
+
+msg=MIMEText(contents,'plain','utf-8')
+msg['From']=from_addr
+msg['to']=to_addr
+msg['对象：']="text"   
+
+server=smtplib.SMTP(smtp_server,25)
+server.login(from_addr,psw)
+server.sendmail(from_addr,to_addr,msg.as_string())
+server.quit()
+
